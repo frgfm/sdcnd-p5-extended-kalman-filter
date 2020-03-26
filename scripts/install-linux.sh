@@ -16,7 +16,8 @@ mkdir tmp
 wget -P tmp/ https://github.com/uNetworking/uWebSockets/archive/v0.13.0.tar.gz
 tar -xvzf tmp/v0.13.0.tar.gz -C tmp/
 cd tmp/uWebSockets-0.13.0
-make
+mkdir build && cd build
+cmake .. && make
 sudo make install
 cd ../..
 if [ ! -f "/usr/lib/libuWS.so" ]; then
