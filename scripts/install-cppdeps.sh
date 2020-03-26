@@ -11,9 +11,8 @@ fi
 
 # Eigen
 if [ ! -d "include/Eigen" ]; then
-    mkdir tmp
-    wget -P tmp/ https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz
-    tar -xvzf tmp/eigen-3.3.7.tar.gz -C tmp/
-    mv tmp/eigen-3.3.7/Eigen include/
-    rm -r tmp/
+    wget https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz
+    tar -xvzf eigen-3.3.7.tar.gz
+    mv eigen-3.3.7/Eigen include/
+    rm -rf eigen-3.3.7
 fi
