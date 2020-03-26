@@ -1,6 +1,7 @@
 #!/bin/bash
 source /etc/os-release || echo 'Warning: /etc/os-release was not found'
 
+# Build essentials
 if [[ " $ID_LIKE " == *' archlinux '* ]]; then
   sudo pacman -S wget libuv openssl gcc cmake make
 else
@@ -12,6 +13,7 @@ else
   sudo apt-get install wget libuv1-dev libssl-dev gcc g++ cmake make
 fi
 
+# uWebSockets
 wget https://github.com/uNetworking/uWebSockets/archive/v0.13.0.tar.gz
 tar -xvzf v0.13.0.tar.gz
 cd uWebSockets-0.13.0
@@ -24,4 +26,5 @@ if [ ! -f "/usr/lib/libuWS.so" ]; then
 fi
 rm -rf v0.13.0.tar.gz uWebSockets-0.13.0
 
+# Specific CPP dependencies
 bash scripts/install-cppdeps.sh
