@@ -8,7 +8,9 @@ cd tmp/uWebSockets-0.14.0
 make
 sudo make install
 cd ../..
-sudo ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
+if [ ! -f "/usr/lib/libuWS.so" ]; then
+    sudo ln -s /usr/lib64/libuWS.so /usr/lib/libuWS.so
+fi
 rm -r tmp
 
 bash scripts/install-cppdeps.sh
