@@ -1,8 +1,8 @@
-#include <cmath>
 #include <uWS/uWS.h>
+#include <cmath>
 #include <iostream>
-#include "json.hpp"
 #include "FusionEKF.h"
+#include "json.hpp"
 #include "tools.h"
 
 using Eigen::MatrixXd;
@@ -22,8 +22,7 @@ string hasData(const string &s) {
   auto b2 = s.find_first_of(']');
   if (found_null != string::npos) {
     return "";
-  }
-  else if (b1 != string::npos && b2 != string::npos) {
+  } else if (b1 != string::npos && b2 != string::npos) {
     return s.substr(b1, b2 - b1 + 1);
   }
   return "";
@@ -40,9 +39,9 @@ int main() {
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
 
-  h.onMessage([&fusionEKF,&tools,&estimations,&ground_truth]
-              (uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
-               uWS::OpCode opCode) {
+  h.onMessage([&fusionEKF, &tools, &estimations, &ground_truth](
+                  uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
+                  uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -86,7 +85,7 @@ int main() {
             iss >> ro;
             iss >> theta;
             iss >> ro_dot;
-            meas_package.raw_measurements_ << ro,theta, ro_dot;
+            meas_package.raw_measurements_ << ro, theta, ro_dot;
             iss >> timestamp;
             meas_package.timestamp_ = timestamp;
           }
@@ -117,7 +116,7 @@ int main() {
 
           double p_x = fusionEKF.ekf_.x_(0);
           double p_y = fusionEKF.ekf_.x_(1);
-          double v1  = fusionEKF.ekf_.x_(2);
+          double v1 = fusionEKF.ekf_.x_(2);
           double v2 = fusionEKF.ekf_.x_(3);
 
           estimate(0) = p_x;
@@ -132,8 +131,8 @@ int main() {
           json msgJson;
           msgJson["estimate_x"] = p_x;
           msgJson["estimate_y"] = p_y;
-          msgJson["rmse_x"] =  RMSE(0);
-          msgJson["rmse_y"] =  RMSE(1);
+          msgJson["rmse_x"] = RMSE(0);
+          msgJson["rmse_y"] = RMSE(1);
           msgJson["rmse_vx"] = RMSE(2);
           msgJson["rmse_vy"] = RMSE(3);
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
@@ -146,7 +145,7 @@ int main() {
         ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
       }
     }  // end websocket message if
-  }); // end h.onMessage
+  });  // end h.onMessage
 
   h.onConnection([&h](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) {
     std::cout << "Connected!" << std::endl;
