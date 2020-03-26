@@ -13,9 +13,9 @@ else
 fi
 
 mkdir tmp
-wget -P tmp/ https://github.com/uNetworking/uWebSockets/archive/v0.14.0.tar.gz
-tar -xvzf tmp/v0.14.0.tar.gz -C tmp/
-cd tmp/uWebSockets-0.14.0
+wget -P tmp/ https://github.com/uNetworking/uWebSockets/archive/v0.13.0.tar.gz
+tar -xvzf tmp/v0.13.0.tar.gz -C tmp/
+cd tmp/uWebSockets-0.13.0
 make
 sudo make install
 cd ../..
