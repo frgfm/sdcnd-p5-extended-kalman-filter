@@ -10,9 +10,8 @@ cd uWebSockets-0.13.0
 wget https://raw.githubusercontent.com/udacity/CarND-Extended-Kalman-Filter-Project/master/cmakepatch.txt
 patch CMakeLists.txt < cmakepatch.txt
 mkdir build && cd build
-export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig 
-OPENSSL_VERSION=`brew list --versions openssl | cut -d' ' -f2`
-cmake -DOPENSSL_ROOT_DIR=$(brew --cellar openssl)/$OPENSSL_VERSION -DOPENSSL_LIBRARIES=$(brew --cellar openssl)/$OPENSSL_VERSION/lib ..
+export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
+cmake -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl -DOPENSSL_LIBRARIES=/usr/local/opt/openssl/lib ..
 make
 sudo make install
 cd ../..
