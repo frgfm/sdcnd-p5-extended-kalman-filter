@@ -37,12 +37,14 @@ Extended Kalman Filter project of Udacity Self-Driving Car Engineer
 - [uWebSockets 0.13.0](https://github.com/uNetworking/uWebSockets/archive/v0.13.0.tar.gz): to handle our web-server.
   - Linux/Mac: [click here for installation instructions](https://github.com/uWebSockets/uWebSockets)
   - Windows: use either Docker, VMware, or even [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO
-- [json](https://github.com/nlohmann/json/releases/download/v3.7.3/json.hpp): to interact with JSON files *(header-only)*.
-  - Any OS: place the file in the  `include/` folder
-- [Eigen](https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz): for linear algebra *(header-only)*.
-  - Any OS: extract the archive and place the `Eigen` directory in the  `include/` folder
-- [Catch](https://github.com/catchorg/Catch2/releases/download/v2.11.3/catch.hpp): for unittests *(header-only)*
-  - Any OS: place the file in the `lib/` folder
+- [json](https://github.com/nlohmann/json): to interact with JSON files *(header-only)*.
+  - Any OS: place the [file](https://github.com/nlohmann/json/releases/download/v3.7.3/json.hpp) in the  `include/` folder
+- [Eigen](https://gitlab.com/libeigen/eigen): for linear algebra *(header-only)*.
+  - Any OS: extract the [archive](https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz) and place the `Eigen` directory in the  `include/` folder
+- [Catch](https://github.com/catchorg/Catch2): for unittests *(header-only)*
+  - Any OS: place the [file](https://github.com/catchorg/Catch2/releases/download/v2.11.3/catch.hpp) in the `lib/` folder
+- [spdlog](https://github.com/gabime/spdlog): for console logging *(header-only)*
+  - Any OS: extract the [archive](https://github.com/gabime/spdlog/archive/v1.5.0.tar.gz) and place the `include/spdlog` directory in the  `include/` folder
 
 *Note: If you are running a Unix system, the installation scripts in the folder `scripts/` will install all the requirements apart from Unity3D. From the repository's main directory, run `bash scripts/install-linux.sh` for Linux or run `bash scripts/install-mac.sh` for MacOS to install those dependencies.*
 
@@ -57,22 +59,30 @@ Your folder hierarchy should look like below:
 ├── CMakeLists.txt
 ├── include
 │   ├── Eigen
-│   └── json.hpp
+│   ├── json.hpp
+│   └── spdlog
+├── lib
+│   └── catch.hpp
 ├── LICENSE
 ├── README.md
 ├── scripts
 │   ├── install-cppdeps.sh
 │   ├── install-linux.sh
 │   └── install-mac.sh
-└── src
-    ├── FusionEKF.cpp
-    ├── FusionEKF.h
-    ├── kalman_filter.cpp
-    ├── kalman_filter.h
-    ├── main.cpp
-    ├── measurement_package.h
-    ├── tools.cpp
-    └── tools.h
+├── src
+│   ├── FusionEKF.cpp
+│   ├── FusionEKF.h
+│   ├── kalman_filter.cpp
+│   ├── kalman_filter.h
+│   ├── main.cpp
+│   ├── measurement_package.h
+│   ├── tools.cpp
+│   └── tools.h
+├── static
+│   └── images
+└── test
+    ├── main_test.cpp
+    └── tools_test.cpp
 ```
 
 Now you can build the project:
@@ -109,6 +119,11 @@ build/tests
 which should yield something similar to:
 
 ```shell
+[2020-03-27 12:28:17.342] [warning] Invalid argument dimensions - received sizes 0 and 1
+[2020-03-27 12:28:17.343] [warning] Invalid argument dimensions - received sizes 1 and 0
+[2020-03-27 12:28:17.343] [warning] Invalid argument dimensions - received sizes 2 and 1
+[2020-03-27 12:28:17.343] [warning] Invalid state vector size - expected 4, received 2
+[2020-03-27 12:28:17.343] [warning] Invalid measurement values - division by zero
 ===============================================================================
 All tests passed (21 assertions in 2 test cases)
 ```
