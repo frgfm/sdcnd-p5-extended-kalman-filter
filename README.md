@@ -1,7 +1,7 @@
 # Extended Kalman Filter
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1afcd8f8980a403e94f13881df995431)](https://www.codacy.com/manual/frgfm/sdcnd-p5-extended-kalman-filter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=frgfm/sdcnd-p5-extended-kalman-filter&amp;utm_campaign=Badge_Grade) ![Ubuntu build](https://github.com/frgfm/sdcnd-p5-extended-kalman-filter/workflows/cpp-build/badge.svg) 
 
-Extended Kalman Filter project of Udacity Self-Driving Car Engineer
+Extended Kalman Filter project of Udacity Self-Driving Car Engineer (cf. [repo](https://github.com/udacity/CarND-Extended-Kalman-Filter-Project)).
 
 ![sim-result](static/images/dataset1_result.gif)
 
@@ -210,7 +210,7 @@ Now, our current filter runs with two sensors' information. Let us investigate t
 
 
 
-RMSE using only Radar
+**RMSE using only Radar**
 
 | State | Dataset 1 | Dataset 2 |
 | ----- | --------- | --------- |
@@ -219,9 +219,11 @@ RMSE using only Radar
 | Vx    | 0.6409    | 0.6219    |
 | Vy    | 0.7622    | 0.8388    |
 
+Switching to a single sensor brings about a significant performance drop. While RADAR measures both the position and velocity, it does not have the same precision as its laser counterpart.
 
 
-RMSE using only LIDAR
+
+**RMSE using only LIDAR**
 
 | State | Dataset 1 | Dataset 2 |
 | ----- | --------- | --------- |
@@ -230,11 +232,12 @@ RMSE using only LIDAR
 | Vx    | 0.8279    | 0.6908    |
 | Vy    | 0.5217    | 0.6126    |
 
+As expected, since LIDAR provides only information about position and not velocity, the performances are better for position than with RADAR, but worse for velocity.
 
+With that in mind, we can note two main advantages of combining both sensors' information to feed the filter:
 
-
-
-
+1. increasing measurement reception frequency will help the filter to keep up with the current state.
+2. coupling several sensors yields their respective advantages (precision on position for laser, availability of velocity measurement on radar).
 
 
 
