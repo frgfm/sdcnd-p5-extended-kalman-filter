@@ -35,3 +35,17 @@ jobs:
       - name: Run unittests
         run: |
           build/tests
+
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up clang-format
+        run: |
+          apt-get update -y && apt-get upgrade -y
+          apt-get install -y cmake git findutils clang-format
+      - name: Run diffcheck on formatted project
+        run: |
+          ./scripts/format-project.sh
+          mkdir -p patches
+          if git diff --patch --exit-code > patches/clang-format.patch; then echo "clang-format is respected"; else echo "Changes required by clang-format!"; false; fi
