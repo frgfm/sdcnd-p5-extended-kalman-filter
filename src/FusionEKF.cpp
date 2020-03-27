@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Eigen/Dense"
 #include "tools.h"
+#include "spdlog/spdlog.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -32,6 +33,7 @@ FusionEKF::FusionEKF() {
   };
 
   if (!radar_enabled_ && !laser_enabled_) {
+    spdlog::error("At least one sensor has to be enabled!");
     throw EKFException();
   }
 
@@ -74,7 +76,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    */
   if (!is_initialized_) {
     // first measurement
-    cout << "EKF: " << endl;
+    spdlog::info("EKF: ");
     ekf_.x_ << 0, 0, 0, 0;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
@@ -99,7 +101,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       ekf_.x_ << measurement_pack.raw_measurements_(0),
           measurement_pack.raw_measurements_(1), 0, 0;
     } else {
-      cout << "Unknown sensor type" << endl;
+      spdlog::warn("Unknown sensor type");
     }
     previous_timestamp_ = measurement_pack.timestamp_;
 

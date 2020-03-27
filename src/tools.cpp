@@ -1,5 +1,6 @@
 #include "tools.h"
 #include <iostream>
+#include "spdlog/spdlog.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
@@ -21,7 +22,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   //  * the estimation vector size should not be zero
   //  * the estimation vector size should equal ground truth vector size
   if (estimations.empty() || estimations.size() != ground_truth.size()) {
-    cout << "Invalid argument dimensions" << endl;
+    spdlog::warn("Invalid argument dimensions - received sizes {} and {}", estimations.size(), ground_truth.size());
     return rmse;
   }
 
@@ -46,7 +47,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd &x_state) {
   J_.setZero(3, 4);
 
   if ( x_state.size() != 4 ) {
-    cout << "Invalid state vector size" << endl;
+    spdlog::warn("Invalid state vector size - expected 4, received {}", x_state.size());
     return J_;
   }
   // recover state parameters
@@ -58,7 +59,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd &x_state) {
   // check division by zero
   float denom = px * px + py * py;
   if (denom == 0) {
-    cout << "Invalid measurement values" << endl;
+    spdlog::warn("Invalid measurement values - division by zero");
   } else {
     float sq_denom = sqrt(denom);
     float denom3_2 = denom * sq_denom;
