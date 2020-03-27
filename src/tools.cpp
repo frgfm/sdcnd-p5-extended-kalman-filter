@@ -43,6 +43,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 MatrixXd Tools::CalculateJacobian(const VectorXd &x_state) {
   // Initialize the Jacobian
   MatrixXd J_(3, 4);
+  J_.setZero(3, 4);
 
   if ( x_state.size() != 4 ) {
     cout << "Invalid state vector size" << endl;
