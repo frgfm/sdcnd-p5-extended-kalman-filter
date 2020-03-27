@@ -16,3 +16,11 @@ if [ ! -d "include/Eigen" ]; then
     mv eigen-3.3.7/Eigen include/
     rm -rf eigen-3.3.7
 fi
+
+# Catch
+if [ ! -d "lib" ]; then
+    mkdir lib
+fi
+if [ ! -f "lib/catch.hpp" ]; then
+    wget -P lib/ https://github.com/catchorg/Catch2/releases/download/v2.11.3/catch.hpp
+fi
