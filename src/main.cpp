@@ -3,6 +3,7 @@
 #include <iostream>
 #include "FusionEKF.h"
 #include "json.hpp"
+#include "spdlog/spdlog.h"
 #include "tools.h"
 
 using Eigen::MatrixXd;
@@ -148,20 +149,20 @@ int main() {
   });  // end h.onMessage
 
   h.onConnection([&h](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) {
-    std::cout << "Connected!" << std::endl;
+    spdlog::info("Environment session connected!");
   });
 
   h.onDisconnection([&h](uWS::WebSocket<uWS::SERVER> ws, int code,
                          char *message, size_t length) {
     ws.close();
-    std::cout << "Disconnected" << std::endl;
+    spdlog::info("Disconnected from session");
   });
 
   int port = 4567;
   if (h.listen(port)) {
-    std::cout << "Listening to port " << port << std::endl;
+    spdlog::info("Listening to port {}", port);
   } else {
-    std::cerr << "Failed to listen to port" << std::endl;
+    spdlog::error("Failed to listen to port {}", port);
     return -1;
   }
 

@@ -1,6 +1,8 @@
 #include "FusionEKF.h"
+#include <exception>
 #include <iostream>
 #include "Eigen/Dense"
+#include "spdlog/spdlog.h"
 #include "tools.h"
 
 using Eigen::MatrixXd;
@@ -8,6 +10,7 @@ using Eigen::VectorXd;
 using std::cos;
 using std::cout;
 using std::endl;
+using std::exception;
 using std::sin;
 
 /**
@@ -17,6 +20,22 @@ FusionEKF::FusionEKF() {
   is_initialized_ = false;
 
   previous_timestamp_ = 0;
+
+  // Sensor configuration
+  radar_enabled_ = true;
+  laser_enabled_ = true;
+
+  // Sensor disabling safeguard
+  struct EKFException : public exception {
+    const char *what() const throw() {
+      return "At least one sensor has to be enabled!";
+    }
+  };
+
+  if (!radar_enabled_ && !laser_enabled_) {
+    spdlog::error("At least one sensor has to be enabled!");
+    throw EKFException();
+  }
 
   // initializing matrices
   R_laser_ = MatrixXd(2, 2);
@@ -57,7 +76,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    */
   if (!is_initialized_) {
     // first measurement
-    cout << "EKF: " << endl;
+    spdlog::info("EKF: ");
     ekf_.x_ << 0, 0, 0, 0;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
@@ -82,7 +101,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       ekf_.x_ << measurement_pack.raw_measurements_(0),
           measurement_pack.raw_measurements_(1), 0, 0;
     } else {
-      cout << "Unknown sensor type" << endl;
+      spdlog::warn("Unknown sensor type");
     }
     previous_timestamp_ = measurement_pack.timestamp_;
 
@@ -120,7 +139,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    * Update
    */
 
-  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR &&
+      radar_enabled_) {
     // Radar updates
     ekf_.R_ = R_radar_;
     Tools tools;
@@ -128,7 +148,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.H_ = Hj_;
     ekf_.UpdateEKF(measurement_pack.raw_measurements_);
 
-  } else {
+  } else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER &&
+             laser_enabled_) {
     // Laser updates
     ekf_.R_ = R_laser_;
     ekf_.H_ = H_laser_;

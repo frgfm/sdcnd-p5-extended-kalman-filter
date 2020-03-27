@@ -9,6 +9,11 @@ set(CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
 
 include_directories(include)
+include_directories(lib)
+
+###############################################################################
+## Build project
+###############################################################################
 
 set(sources
     src/main.cpp
@@ -18,7 +23,6 @@ set(sources
     src/tools.h
     src/FusionEKF.h
     src/kalman_filter.h)
-
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
@@ -34,3 +38,15 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 add_executable(ExtendedKF ${sources})
 
 target_link_libraries(ExtendedKF z ssl uv uWS)
+
+###############################################################################
+## Testing with Catch2
+###############################################################################
+
+set(test_sources
+    test/main_test.cpp
+    test/tools_test.cpp
+    src/tools.cpp
+    src/tools.h )
+
+add_executable(tests ${test_sources})
