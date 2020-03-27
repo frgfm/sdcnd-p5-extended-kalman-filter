@@ -40,8 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run diffcheck on formatted project
+      - name: Run clang-format and diffcheck the patch
         run: |
+          clang-format --version
           bash scripts/format-project.sh
           mkdir -p patches
           if git diff --patch --exit-code > patches/clang-format.patch; then echo "clang-format is respected"; else echo "Changes required by clang-format!"; false; fi

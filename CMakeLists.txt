@@ -48,5 +48,5 @@ set(test_sources
     test/tools_test.cpp
     src/tools.cpp
     src/tools.h )
+
 add_executable(tests ${test_sources})
-###############################################################################
