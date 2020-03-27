@@ -98,6 +98,25 @@ If you encounter an issue with the above builds, please refer to the "Available 
 
 ## Usage
 
+### Unittests
+
+By compiling the project previously, you created 2 executables. One of them is here to run unittests using [Catch2](https://github.com/catchorg/Catch2). In order to run the tests, use the following command:
+
+```bash
+build/tests
+```
+
+which should yield something similar to:
+
+```shell
+===============================================================================
+All tests passed (21 assertions in 2 test cases)
+```
+
+
+
+### Project build
+
 Run the recently built project using the following command:
 
 ```
