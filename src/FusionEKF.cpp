@@ -1,4 +1,5 @@
 #include "FusionEKF.h"
+#include <exception>
 #include <iostream>
 #include "Eigen/Dense"
 #include "tools.h"
@@ -8,6 +9,7 @@ using Eigen::VectorXd;
 using std::cos;
 using std::cout;
 using std::endl;
+using std::exception;
 using std::sin;
 
 /**
@@ -21,6 +23,17 @@ FusionEKF::FusionEKF() {
   // Sensor configuration
   radar_enabled_ = true;
   laser_enabled_ = true;
+
+  // Sensor disabling safeguard
+  struct EKFException : public exception {
+    const char *what() const throw() {
+      return "At least one sensor has to be enabled!";
+    }
+  };
+
+  if (!radar_enabled_ && !laser_enabled_) {
+    throw EKFException();
+  }
 
   // initializing matrices
   R_laser_ = MatrixXd(2, 2);
