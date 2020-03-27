@@ -41,8 +41,10 @@ Extended Kalman Filter project of Udacity Self-Driving Car Engineer
   - Any OS: place the file in the  `include/` folder
 - [Eigen](https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz): for linear algebra *(header-only)*.
   - Any OS: extract the archive and place the `Eigen` directory in the  `include/` folder
+- [Catch](https://github.com/catchorg/Catch2/releases/download/v2.11.3/catch.hpp): for unittests *(header-only)*
+  - Any OS: place the file in the `lib/` folder
 
-*Note: If you are running a Unix system, the installation scripts in the folder `scripts/` will install all the dependencies apart from Unity3D*
+*Note: If you are running a Unix system, the installation scripts in the folder `scripts/` will install all the requirements apart from Unity3D. From the repository's main directory, run `bash scripts/install-linux.sh` for Linux or run `bash scripts/install-mac.sh` for MacOS to install those dependencies.*
 
 ### Installation
 
