@@ -36,27 +36,12 @@ jobs:
         run: |
           build/tests
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-          architecture: x64
-      - name: CPP Lint
-        run: |
-          python -m pip install --upgrade pip
-          pip install cpplint
-          cpplint --filter=-legal/copyright --recursive src/
-
   clang-format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Run diffcheck on formatted project
         run: |
-          ./scripts/format-project.sh
+          bash scripts/format-project.sh
           mkdir -p patches
           if git diff --patch --exit-code > patches/clang-format.patch; then echo "clang-format is respected"; else echo "Changes required by clang-format!"; false; fi
