@@ -30,6 +30,10 @@ class FusionEKF {
    */
   KalmanFilter ekf_;
 
+  // Sensor configuration
+  bool radar_enabled_;
+  bool laser_enabled_;
+
  private:
   // check whether the tracking toolbox was initialized or not (first
   // measurement)

@@ -18,6 +18,10 @@ FusionEKF::FusionEKF() {
 
   previous_timestamp_ = 0;
 
+  // Sensor configuration
+  radar_enabled_ = true;
+  laser_enabled_ = true;
+
   // initializing matrices
   R_laser_ = MatrixXd(2, 2);
   R_radar_ = MatrixXd(3, 3);
@@ -120,7 +124,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    * Update
    */
 
-  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+  if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR && radar_enabled_) {
     // Radar updates
     ekf_.R_ = R_radar_;
     Tools tools;
@@ -128,7 +132,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.H_ = Hj_;
     ekf_.UpdateEKF(measurement_pack.raw_measurements_);
 
-  } else {
+  } else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER && laser_enabled_) {
     // Laser updates
     ekf_.R_ = R_laser_;
     ekf_.H_ = H_laser_;
