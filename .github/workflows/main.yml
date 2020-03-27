@@ -42,7 +42,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up clang-format
         run: |
-          apt-get install -y git findutils clang-format
+          sudo apt-get update -y && apt-get upgrade -y
+          sudo apt-get install -y git findutils clang-format
       - name: Run diffcheck on formatted project
         run: |
           ./scripts/format-project.sh
