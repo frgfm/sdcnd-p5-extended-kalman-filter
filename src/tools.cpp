@@ -22,7 +22,8 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   //  * the estimation vector size should not be zero
   //  * the estimation vector size should equal ground truth vector size
   if (estimations.empty() || estimations.size() != ground_truth.size()) {
-    spdlog::warn("Invalid argument dimensions - received sizes {} and {}", estimations.size(), ground_truth.size());
+    spdlog::warn("Invalid argument dimensions - received sizes {} and {}",
+                 estimations.size(), ground_truth.size());
     return rmse;
   }
 
@@ -46,8 +47,9 @@ MatrixXd Tools::CalculateJacobian(const VectorXd &x_state) {
   MatrixXd J_(3, 4);
   J_.setZero(3, 4);
 
-  if ( x_state.size() != 4 ) {
-    spdlog::warn("Invalid state vector size - expected 4, received {}", x_state.size());
+  if (x_state.size() != 4) {
+    spdlog::warn("Invalid state vector size - expected 4, received {}",
+                 x_state.size());
     return J_;
   }
   // recover state parameters

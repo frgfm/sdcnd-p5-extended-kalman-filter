@@ -2,8 +2,8 @@
 #include <exception>
 #include <iostream>
 #include "Eigen/Dense"
-#include "tools.h"
 #include "spdlog/spdlog.h"
+#include "tools.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;

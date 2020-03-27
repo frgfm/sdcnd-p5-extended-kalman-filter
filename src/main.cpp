@@ -3,8 +3,8 @@
 #include <iostream>
 #include "FusionEKF.h"
 #include "json.hpp"
-#include "tools.h"
 #include "spdlog/spdlog.h"
+#include "tools.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
